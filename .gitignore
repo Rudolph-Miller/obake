@@ -9,3 +9,4 @@
 
 node_modules/
 bundle.js
+src/config.lisp
