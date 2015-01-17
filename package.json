@@ -8,6 +8,7 @@
     "immutable": "^3.4.1",
     "jsx-loader": "^0.12.2",
     "react": "^0.12.2",
-    "react-jonathan": "0.0.2"
+    "react-jonathan": "0.0.2",
+    "react-router": "^0.11.6"
   }
 }
