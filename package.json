@@ -1,0 +1,13 @@
+{
+  "name": "obake",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack -w"
+  },
+  "dependencies": {
+    "immutable": "^3.4.1",
+    "jsx-loader": "^0.12.2",
+    "react": "^0.12.2",
+    "react-jonathan": "0.0.2"
+  }
+}
