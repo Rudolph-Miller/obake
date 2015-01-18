@@ -14,11 +14,13 @@
        :auto-increment t
        :reader user-id)
    (name :type (varchar 255)
-         :accessor user-name)
+         :accessor user-name
+         :initarg :name)
    (email :type (varchar 255)
-          :accessor user-email)
-   (encrypted-password :type (varchar 255)
-                       :accessor user-encrypted-password))
+          :accessor user-email
+          :initarg :name)
+   (password :type (varchar 255)
+                       :accessor user-password))
   (:metaclass <dao-table-class>))
 
 (defclass post ()
@@ -41,6 +43,8 @@
   (local-time:universal-to-timestamp value))
 (defmethod integral:inflate ((object post) (slot-name (eql 'updated-at)) value)
   (local-time:universal-to-timestamp value))
+(defmethod integral:deflate ((object user) (slot-name (eql 'password)) value)
+  (bcrypt:hash value))
 (defmethod integral:deflate ((object post) (slot-name (eql 'updated-at)) value)
   (local-time:timestamp-to-universal value))
 
