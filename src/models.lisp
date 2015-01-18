@@ -1,13 +1,21 @@
 (in-package :cl-user)
 (defpackage obake.models
-  (:use :cl :integral)
+  (:use :cl
+        :integral
+        :annot.class)
   (:import-from :obake.config
                 :config))
 (in-package :obake.models)
 
+(syntax:use-syntax 'annot)
+
 (apply #'connect-toplevel (cdr (assoc :maindb (config :databases))))
 (setf integral:*auto-migration-mode* t)
 
+;; Class definitions
+
+@export
+@export-accessors
 (defclass user ()
   ((id :type integer
        :primary-key t
@@ -23,21 +31,28 @@
                        :accessor user-password))
   (:metaclass <dao-table-class>))
 
+@export
+@export-accessors
 (defclass post ()
   ((id :type integer
        :primary-key t
        :auto-increment t
        :reader post-id)
    (title :type (varchar 255)
-          :accessor post-title)
+          :accessor post-title
+          :initarg :title)
    (content :type text
-            :accessor post-content)
+            :accessor post-content
+            :initarg :content)
    (created-at :type timestamp
-               :accessor post-created-at)
+               :reader post-created-at)
    (user-id :type integer
-            :accessor post-user-id))
+            :accessor post-user-id
+            :initarg :user-id))
   (:metaclass <dao-table-class>)
   (:keys (user-id)))
+
+;; Inflation & Deflation
 
 (defmethod integral:inflate ((object post) (slot-name (eql 'created-at)) value)
   (local-time:universal-to-timestamp value))
@@ -48,5 +63,22 @@
 (defmethod integral:deflate ((object post) (slot-name (eql 'updated-at)) value)
   (local-time:timestamp-to-universal value))
 
+;; Relations
+
+@export
 (defmethod user-posts ((user user))
   (select-dao 'post (where (:= :user-id (user-id user)))))
+
+;; User
+
+@export
+(defun sign-in (email password)
+  (let ((user (car (select-dao 'user (where (:= :user.email email)) (limit 1)))))
+    (when (and user (bcrypt:password= password (user-password user)))
+        user)))
+
+;; Posts
+
+@export
+(defun all-posts ()
+  (select-dao 'post))

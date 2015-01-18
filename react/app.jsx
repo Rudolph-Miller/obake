@@ -3,6 +3,10 @@
 var React = require("react");
 var Router = require("react-router");
 var RouteHandler = Router.RouteHandler;
+var qwest = require("qwest");
+
+var jonathan = require("react-jonathan");
+var Api = jonathan.Api;
 
 var Main = React.createClass({
     render: function () {
@@ -13,7 +17,8 @@ var Main = React.createClass({
 });
 
 var Admin = React.createClass({
-    // TODO: sign in
+    mixins: [ Api ],
+    api: "/api/admin",
     render: function () {
         return (
             <div>

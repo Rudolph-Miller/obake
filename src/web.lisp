@@ -1,8 +1,10 @@
 (in-package :cl-user)
 (defpackage obake.web
   (:use :cl
+        :caveman2
         :jonathan
         :obake.config
+        :obake.models
         :sxql
         :obake.models)
   (:export :*web*))
@@ -23,5 +25,11 @@
 
 @GETAPI
 (defun items ()
-  (list :items '((:title "title1" :content "content1")
-                 (:title "title2" :content "content2"))))
+  `(:items ,(all-posts)))
+
+@GETAPI
+(defun admin ()
+  (loop for key being the hash-keys of *session*
+     do (print key)
+       do (print (gethash key *session*)))
+  (list :a :b))
