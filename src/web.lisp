@@ -3,9 +3,8 @@
   (:use :cl
         :jonathan
         :obake.config
-        :obake.db
-        :datafly
-        :sxql)
+        :sxql
+        :obake.models)
   (:export :*web*))
 (in-package :obake.web)
 

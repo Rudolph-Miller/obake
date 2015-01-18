@@ -7,14 +7,16 @@
   :version "0.1"
   :author ""
   :license ""
-  :depends-on (:datafly
-               :sxql
+  :depends-on (:sxql
                :cl-syntax
-               :jonathan)
+               :jonathan
+               :integral
+               :local-time
+               :monkeylib-bcrypt)
   :components ((:module "src"
                 :components
-                ((:file "web" :depends-on ("config" "db"))
-                 (:file "db" :depends-on ("config"))
-                 (:file "config"))))
+                ((:file "web" :depends-on ("config" "models"))
+                 (:file "config")
+                 (:file "models" :depends-on ("config")))))
   :description ""
   :in-order-to ((test-op (load-op obake-test))))
