@@ -20,7 +20,7 @@ var Obake = React.createClass({
 var ObakeHeader = React.createClass({
     mixins: [ Api ],
 
-    api: "/api/header",
+    api: "/header",
     
     getInitialState: function () {
         return {
@@ -59,7 +59,7 @@ var ObakeContent = React.createClass({
 var ObakeItems = React.createClass({
     mixins: [ Api ],
 
-    api: "/api/items",
+    api: "/items",
     
     getInitialState: function () {
         return {

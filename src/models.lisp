@@ -72,10 +72,10 @@
 ;; User
 
 @export
-(defun sign-in (email password)
+(defun user-sign-in (email password)
   (let ((user (car (select-dao 'user (where (:= :user.email email)) (limit 1)))))
     (when (and user (bcrypt:password= password (user-password user)))
-        user)))
+      user)))
 
 ;; Posts
 

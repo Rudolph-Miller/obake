@@ -1,7 +1,6 @@
 (in-package :cl-user)
 (defpackage obake.web
   (:use :cl
-        :caveman2
         :jonathan
         :obake.config
         :obake.models
@@ -13,6 +12,10 @@
 (syntax:use-syntax :annot)
 
 (set-app :obake)
+
+(defun ensure-signin ()
+  (when (null (gethash :user *session*))
+    (throw-code 403)))
 
 @GETAPI
 (defun sample ()
@@ -33,3 +36,12 @@
      do (print key)
        do (print (gethash key *session*)))
   (list :a :b))
+
+@POSTAPI
+(defun sign-in (&key |email| |password|)
+  (let ((user (user-sign-in |email| |password|)))
+    (setf (gethash :user *session*) user)))
+
+@DELETEAPI
+(defun sign-out ()
+  (setf (gethash :user *session*) nil))

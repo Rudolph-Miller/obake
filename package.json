@@ -9,7 +9,7 @@
     "jsx-loader": "^0.12.2",
     "qwest": "^1.5.4",
     "react": "^0.12.2",
-    "react-jonathan": "0.0.2",
+    "react-jonathan": "0.0.3",
     "react-router": "^0.11.6"
   }
 }

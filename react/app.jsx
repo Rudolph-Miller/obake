@@ -7,6 +7,7 @@ var qwest = require("qwest");
 
 var jonathan = require("react-jonathan");
 var Api = jonathan.Api;
+var Ajax = jonathan.Ajax;
 
 var Main = React.createClass({
     render: function () {
@@ -17,8 +18,22 @@ var Main = React.createClass({
 });
 
 var Admin = React.createClass({
-    mixins: [ Api ],
-    api: "/api/admin",
+    mixins: [ Ajax ],
+    
+    componentDidMount: function () {
+        var path = "/api/sign-in";
+        var query = {
+            email: "sample@example.com",
+            password: "password"
+        };
+        
+        this.post(path, query).then(function (json) {
+            console.log(json);
+        }).catch(function (message) {
+            console.log(message);
+        });
+    },
+    
     render: function () {
         return (
             <div>
