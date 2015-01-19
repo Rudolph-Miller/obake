@@ -30,13 +30,6 @@
 (defun items ()
   `(:items ,(all-posts)))
 
-@GETAPI
-(defun admin ()
-  (loop for key being the hash-keys of *session*
-     do (print key)
-       do (print (gethash key *session*)))
-  (list :a :b))
-
 @POSTAPI
 (defun sign-in (&key |email| |password|)
   (let ((user (user-sign-in |email| |password|)))
